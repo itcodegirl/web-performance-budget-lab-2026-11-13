@@ -36,3 +36,5 @@ Self-check for this folder: `node --test test.mjs`.
 
 Real projects build with a tool such as Vite and put the output in `dist/assets`; this folder skips that so the lesson can
 focus on the budget. No real employer or client code is in it.
+
+Performance budgets are checked on pull requests.
