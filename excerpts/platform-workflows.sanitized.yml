@@ -1,0 +1,29 @@
+# Two sanitized workflow excerpts for reading practice, separated by ---. Condensed from a real production
+# repository's workflows (October 2026); names, secrets, environment values and
+# unrelated jobs are removed. It is here so you can practice reading the
+# trigger, command and failure behavior of someone else's checks.
+
+# .github/workflows/lighthouse-ci.yml
+# On-demand performance evidence. The required build job already enforces
+# bundle size and route boundaries on every pull request.
+name: lighthouse
+on:
+  workflow_dispatch:
+
+---
+# Separate excerpt: .github/workflows/ci-smoke.yml, job "build & bundle budget"
+# These excerpts represent two files; do not deploy this combined document.
+name: ci-smoke
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+# Draft pull requests skip the job; unrelated triggers and jobs are omitted.
+jobs:
+  build-and-budget:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build production bundle
+        run: npm run build
+      - name: Check bundle budget
+        run: npm run check:bundle

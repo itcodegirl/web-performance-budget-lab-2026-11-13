@@ -1,0 +1,15 @@
+name: performance budget
+on: pull_request
+
+jobs:
+  budget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # This repository has no dependencies and ships its build output in dist/,
+      # so there is no install or build step. In a real project, add them here.
+      - run: node check-bundle-budget.mjs
+      - run: npx --yes @lhci/cli@0.15.1 autorun
